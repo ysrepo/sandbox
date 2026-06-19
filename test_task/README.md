@@ -70,7 +70,7 @@
 
 29. Edit `launch.json`, refer to `.vscode/launch.json` from this repository
 
-30. Set the breakpoint let's say on the 47th line, launch debug by clicking on run dropdown and choosing "Debug C/C++ File" and step into the code of `avformat_alloc_context()`
+30. Set the breakpoint let's say on the 47th line in `main.c` located in `test_task/`, launch debug by clicking on run dropdown and choosing "Debug C/C++ File" and step into the code of `avformat_alloc_context()`
 
 31. Enjoy debugging! =)
 
