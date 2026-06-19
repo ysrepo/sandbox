@@ -62,13 +62,13 @@
 
 20. Now open your main.c in `test_task` folder, then click "Terminal" tab and click "Configure Default Build Task...". Choose in the dropdown "C/C++: gcc.exe build active file". This should generate `.vscode/` folder under the root directory "sandbox" with `tasks.json` file
 
-21. Edit `task.json` file as provided
+21. Edit `task.json`, refer to `.vscode/task.json` from this repository
 
 22. Install debuggings tools to MinGW64 `pacman -S --needed base-devel mingw-w64-x86_64-toolchain`
 
 23. In VS Code click "Run" tab, then "Add Configuration...". This should generate clear `launch.json` 
 
-24. Edit `launch.json` as provided
+24. Edit `launch.json`, refer to `.vscode/launch.json` from this repository
 
 25. Set the breakpoint let's say on the 47th line, launch debug by clicking on run dropdown and choosing "Debug C/C++ File" and step into the code of `avformat_alloc_context()`
 
