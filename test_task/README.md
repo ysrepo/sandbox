@@ -14,7 +14,7 @@
 
 8. Install `MSYS2`, most common way is directly to `C:\` which is by default
 
-9. Open settings (`File>Preferences>Settings`) and type in search `terminal.integrated.profile.windows`, then click `Edit in settings.json`
+9. In VS Code open settings (`File>Preferences>Settings`) and type in search `terminal.integrated.profile.windows`, then click `Edit in settings.json`
 
 10. Add to settings, save and close them: 
 	`
