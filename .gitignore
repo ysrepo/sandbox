@@ -1,0 +1,4 @@
+FFmpeg/
+test_task/main.exe
+test_task/main.*
+test_task/*.pgm

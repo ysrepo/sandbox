@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}\\main.exe",
-            "args": ["${fileDirname}\\file_example_MP4_1920_18MG.mp4"],
+            "args": ["${fileDirname}\\file_example_MP4_1920_18MG.mp4", "${fileDirname}"],
             "stopAtEntry": false,
             "cwd": "C:/msys64/mingw64/bin",
             "environment": [],
