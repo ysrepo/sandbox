@@ -6,6 +6,20 @@
 #include <libavcodec/avcodec.h>
 #include <libavutil/imgutils.h>
 
+#include <unistd.h>
+
+#if defined(_WIN32)
+    #include <windows.h>
+    #define PATH_LIMIT MAX_PATH
+#elif defined(__unix__)
+    // use pathconf dynamically on POSIX, falling back to POSIX PATH_MAX
+    #define PATH_LIMIT pathconf("/", _PC_PATH_MAX)
+#endif
+
+#if !defined(PATH_LIMIT)
+    #define PATH_LIMIT -1
+#endif
+
 char * _arg_to_string(void * sample);
 
 char * _avfmtctx_to_string(AVFormatContext sample);
@@ -18,15 +32,32 @@ static int decode_packet(
     AVFormatContext * format_context, 
     AVPacket * packet, 
     AVCodecContext * codex_context, 
-    AVFrame * frame, 
-    char * output_directory
+    AVFrame * frame
 );
 
 static void save_gray_frame(unsigned char * buf, int wrap, int xsize, int ysize, char * filename);
 
+void _init_cwd();
+
+static char * _cwd = NULL;
+
 int main(int argc, char *argv[]) {
-    if (argc < 3) {
-        printf("Usage: %s <input_file> <output_directory>\n", argv[0]);
+
+    if (PATH_LIMIT == -1) {
+
+        perror(
+            "Platform identifier (operating system) is not detected.\n \
+            Neither Windows API nor Unix API found.\n \
+            The execution is terminated.\n"
+        );
+
+        return EXIT_FAILURE;
+    }
+
+    _init_cwd();
+
+    if (argc < 2) {
+        printf("Usage: %s <input_file>\n", argv[0]);
         return EXIT_FAILURE;
     }
 
@@ -46,7 +77,7 @@ int main(int argc, char *argv[]) {
         perror("fmt_ctx error\n");
     }
 
-    printf("\ninput <filename>: %s, <output_directory>: %s\n\n", argv[1], argv[2]);
+    printf("\ninput <filename>: %s, <output_directory>: %s\n\n", argv[1], _cwd);
 
     if (avformat_open_input(&fmt_ctx, argv[1], NULL, NULL) != 0) {
         perror("file opening error\n");
@@ -102,7 +133,7 @@ int main(int argc, char *argv[]) {
     while (av_read_frame(fmt_ctx, _packet) >= 0) {
         if (_packet->stream_index == video_stream_index) {
             printf("AVPacket->pts %d\n", _packet->pts);
-            response = decode_packet(fmt_ctx, _packet, _video_codec_context, _frame, argv[2]);
+            response = decode_packet(fmt_ctx, _packet, _video_codec_context, _frame);
             if (response < 0)
                 break;
             // stop it, otherwise we'll be saving hundreds of frames
@@ -159,7 +190,7 @@ void _analyze_pointer_workflow(AVFormatContext * some_sample_fmt_ctx) {
     }
 }
 
-static int decode_packet(AVFormatContext * format_context, AVPacket * packet, AVCodecContext * codex_context, AVFrame * frame, char * output_directory) {
+static int decode_packet(AVFormatContext * format_context, AVPacket * packet, AVCodecContext * codex_context, AVFrame * frame) {
     // supply raw packet data as input to a decoder
     int response = avcodec_send_packet(codex_context, packet);
 
@@ -192,7 +223,7 @@ static int decode_packet(AVFormatContext * format_context, AVPacket * packet, AV
             );
 
             char frame_filename[1024];
-            snprintf(frame_filename, sizeof(frame_filename), "%s\\%s-%d.pgm", output_directory, "frame", codex_context->frame_num);
+            snprintf(frame_filename, sizeof(frame_filename), "%s\\%s-%d.pgm", _cwd, "frame", codex_context->frame_num);
 
             if (frame->format != AV_PIX_FMT_YUV420P) {
                 printf("Warning: the generated file may not be a grayscale image, but could e.g. be just the R component if the video format is RGB");
@@ -219,4 +250,25 @@ static void save_gray_frame(unsigned char * buf, int wrap, int xsize, int ysize,
     }
 
     fclose(f);
+}
+
+void _init_cwd() {
+    char cwd[PATH_LIMIT];
+
+    if (getcwd(cwd, sizeof(cwd)) == NULL) {
+        perror("getcwd() error");
+        return;
+    }
+
+    _cwd = malloc(strlen(cwd) + 1);
+
+    if (_cwd == NULL) {
+        return;
+    }
+
+    strcpy(_cwd, cwd);
+
+    printf("_cwd initialized successfully, current working directory: %s\n", _cwd);
+
+    return;
 }

@@ -21,7 +21,7 @@
                 "-lavutil"
 			],
 			"options": {
-				"cwd": "C:/msys64/mingw64/bin"
+				"cwd": "${fileDirname}"
 			},
 			"problemMatcher": [
 				"$gcc"
