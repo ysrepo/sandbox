@@ -6,44 +6,14 @@
 #include <libavcodec/avcodec.h>
 #include <libavutil/imgutils.h>
 
-#include <unistd.h>
-
-#if defined(_WIN32)
-    #include <windows.h>
-    #define PATH_LIMIT MAX_PATH
-#elif defined(__unix__)
-    // use pathconf dynamically on POSIX, falling back to POSIX PATH_MAX
-    #define PATH_LIMIT pathconf("/", _PC_PATH_MAX)
-#endif
-
-#if !defined(PATH_LIMIT)
-    #define PATH_LIMIT -1
-#endif
-
-char * _arg_to_string(void * sample);
-
-char * _avfmtctx_to_string(AVFormatContext sample);
-
-void _analyze_pointer_workflow(AVFormatContext * some_sample_fmt_ctx);
-
-static int _frame_counter = 0;
-
-static int decode_packet(
-    AVFormatContext * format_context, 
-    AVPacket * packet, 
-    AVCodecContext * codex_context, 
-    AVFrame * frame
-);
-
-static void save_gray_frame(unsigned char * buf, int wrap, int xsize, int ysize, char * filename);
-
-void _init_cwd();
-
-static char * _cwd = NULL;
+#include "prerequisite.h"
+#include "process_video.h"
 
 int main(int argc, char *argv[]) {
+    
+    _init_platform_consts();
 
-    if (PATH_LIMIT == -1) {
+    if (!_platform_dependencies_processed) {
 
         perror(
             "Platform identifier (operating system) is not detected.\n \
@@ -54,10 +24,10 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    _init_cwd();
-
     if (argc < 2) {
+
         printf("Usage: %s <input_file>\n", argv[0]);
+
         return EXIT_FAILURE;
     }
 
@@ -150,125 +120,4 @@ int main(int argc, char *argv[]) {
     avformat_close_input(&fmt_ctx);
 
     return EXIT_SUCCESS;
-}
-
-char *_arg_to_string(void * sample) {
-    char * result = malloc(sizeof(char[32]));
-    if (sample != NULL) { 
-        snprintf(result, sizeof(char[32]), "%.10p", sample);
-        return result;
-    }
-    return "0000000000";
-}
-
-char *_avfmtctx_to_string(AVFormatContext sample) {
-    char * result = malloc(sizeof(char[32]));
-    snprintf(result, sizeof(char[32]), "%.10p", &sample);
-    return result;
-}
-
-void _analyze_pointer_workflow(AVFormatContext * some_sample_fmt_ctx) {
-    printf("%-85s, %9s: \"0x%s\"\n", "address of pointer itself", "&fmt_ctx", _arg_to_string(&some_sample_fmt_ctx));
-    
-    printf("%-85s, %9s: \"0x%s\"\n", "address the pointer points to (should be NULL since that is its initialization)", "fmt_ctx", _arg_to_string(some_sample_fmt_ctx));
-
-    // here next goes dereferencing of pointer, so at first must be checked if pointer is not NULL, otherwise it would lead to UB, e.g. Segmentation fault
-    if (some_sample_fmt_ctx != NULL) {
-        printf(
-            "%-85s, %9s: \"0x%s\"\n", 
-            "derefenced value of pointer (should be NULL and should lead to undefined behaviour)", 
-            "* fmt_ctx", 
-            _avfmtctx_to_string((AVFormatContext) *some_sample_fmt_ctx)
-        );
-    } else {
-        printf(
-            "%-85s, %9s: \"0x%s\"\n", 
-            "derefenced value of pointer (should be NULL and should lead to undefined behaviour)", 
-            "* fmt_ctx", 
-            "0 (struct is not allocated in memory at all)"
-        );
-    }
-}
-
-static int decode_packet(AVFormatContext * format_context, AVPacket * packet, AVCodecContext * codex_context, AVFrame * frame) {
-    // supply raw packet data as input to a decoder
-    int response = avcodec_send_packet(codex_context, packet);
-
-    if (response < 0) {
-        printf("Error while sending a packet to the decoder: %s", av_err2str(response));
-    }
-
-    while (response >= 0) {
-        // return decoded output data (into a frame) from a decoder
-        response = avcodec_receive_frame(codex_context, frame);
-
-        if (response == AVERROR(EAGAIN) || response == AVERROR_EOF) {
-            printf("Error here, error code: %d. AVERROR(EAGAIN): %d, AVERROR_EOF: %d.\n", response, AVERROR(EAGAIN), AVERROR_EOF);
-            break;
-        } else if (response < 0) {
-            printf("Error while receiving a frame to the decoder: %s", av_err2str(response));
-        }
-        
-        if (response >= 0) {
-            int buffer_size = av_image_get_buffer_size(frame->format, frame->width, frame->height, 1);
-            printf(
-                "Frame %d (type=%c, size=%d bytes, format=%d) pts %d key_frame %d [DTS %d]\n",
-                codex_context->frame_num,
-                av_get_picture_type_char(frame->pict_type),
-                buffer_size,
-                frame->format,
-                frame->pts,
-                av_stream_get_parser(format_context->streams[0])->key_frame,
-                _frame_counter++
-            );
-
-            char frame_filename[1024];
-            snprintf(frame_filename, sizeof(frame_filename), "%s\\%s-%d.pgm", _cwd, "frame", codex_context->frame_num);
-
-            if (frame->format != AV_PIX_FMT_YUV420P) {
-                printf("Warning: the generated file may not be a grayscale image, but could e.g. be just the R component if the video format is RGB");
-            }
-
-            save_gray_frame(frame->data[0], frame->linesize[0], frame->width, frame->height, frame_filename);
-        }
-    }
-}
-
-static void save_gray_frame(unsigned char * buf, int wrap, int xsize, int ysize, char * filename) {
-    FILE * f;
-    int i;
-
-    f = fopen(filename, "w");
-
-    // writing the minimal required header for a pgm file format
-    // portable graymap format -> https://en.wikipedia.org/wiki/Netpbm_format#PGM_example 
-    fprintf(f, "P5\n%d %d\n%d\n", xsize, ysize, 255);
-
-    // writing line by line
-    for (i = 0; i < ysize; i++) {
-        fwrite(buf + i * wrap, 1, xsize, f);
-    }
-
-    fclose(f);
-}
-
-void _init_cwd() {
-    char cwd[PATH_LIMIT];
-
-    if (getcwd(cwd, sizeof(cwd)) == NULL) {
-        perror("getcwd() error");
-        return;
-    }
-
-    _cwd = malloc(strlen(cwd) + 1);
-
-    if (_cwd == NULL) {
-        return;
-    }
-
-    strcpy(_cwd, cwd);
-
-    printf("_cwd initialized successfully, current working directory: %s\n", _cwd);
-
-    return;
 }
