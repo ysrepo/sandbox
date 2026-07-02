@@ -9,7 +9,7 @@
 #include "prerequisite.h"
 #include "process_video.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {  
     
     _init_platform_consts();
 

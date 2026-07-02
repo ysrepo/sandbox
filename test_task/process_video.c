@@ -46,7 +46,7 @@ int decode_packet(AVFormatContext * format_context, AVPacket * packet, AVCodecCo
                 _cwd, 
                 _path_separator, 
                 "frame", 
-                codex_context->frame_num  // TODO cx_ct->frame_num doesn't work on UNIX
+                _frame_counter
             );
 
             if (frame->format != AV_PIX_FMT_YUV420P) {
