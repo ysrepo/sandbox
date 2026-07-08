@@ -1,3 +1,7 @@
+### <u>This README guides how to include the FFmpeg library into the code and how to debug it with VS Code over "MSYS2 MinGW64"</u>
+
+(Currently broken due to changes in location paths)
+
 1. Create somewhere folder sandbox
 
 2. Open folder sandbox in VS Code 
