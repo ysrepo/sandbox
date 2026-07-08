@@ -8,16 +8,11 @@
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
-				{
-                    "value": "-I/usr/local/include/libavformat",
-                    "quoting": "escape"
-                },
 				"${file}",
 				"${fileDirname}/prerequisite.c",
 				"${fileDirname}/process_video.c",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}",
-				"-L/usr/local/lib",
                 "-lavformat", 
                 "-lavcodec", 
                 "-lavutil"
