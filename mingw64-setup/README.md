@@ -10,7 +10,7 @@ Target OS: Windows 11, target environment: MSYS2 MinGW64
 
 1. Delete FFmpeg directory
 
-1. Open git bash in current directory (Ctrl+\`) and run `git clone https://github.com/FFmpeg/FFmpeg.git`
+1. Open git bash in sandbox/ directory (Ctrl+\`) and run `git clone https://github.com/FFmpeg/FFmpeg.git`
 
 1. In git bash run `cd FFmpeg/`
 
@@ -23,18 +23,18 @@ Target OS: Windows 11, target environment: MSYS2 MinGW64
 1. In VS Code open settings (`File>Preferences>Settings`) and type in search `terminal.integrated.profile.windows`, then click `Edit in settings.json`
 
 1. Add to settings, save and close them: 
-	`
-        "MSYS2 MinGW64": {
-            "path": "C:\\msys64\\usr\\bin\\bash.exe",
-            "label": "MSYS2",
-            "args": ["--login", "-i"],
-            "env": {
-                "MSYSTEM": "MINGW64",
-                "CHERE_INVOKING": "1",
-                "MSYS2_PATH_TYPE": "inherit"
-            }
+	```
+    "MSYS2 MinGW64": {
+        "path": "C:\\msys64\\usr\\bin\\bash.exe",
+        "label": "MSYS2",
+        "args": ["--login", "-i"],
+        "env": {
+            "MSYSTEM": "MINGW64",
+            "CHERE_INVOKING": "1",
+            "MSYS2_PATH_TYPE": "inherit"
         }
-    `
+    }
+    ```
 
 1. Close all open integrated terminals and re-open VS Code (preferly always with Admin Rights)
 
@@ -58,8 +58,7 @@ Target OS: Windows 11, target environment: MSYS2 MinGW64
 
 1. Then install make tool: `pacman -S make`
 
-1. Then type just `make` in MSYS2 MinGW64 terminal, run this command and wait for compilation with build (for speed-up sometimes it is possible to run 
-`make -j8` command instead which executes building in parallel threads)
+1. Run `make` command in MSYS2 MinGW64 terminal and wait for compilation with build (for speed-up sometimes it is possible to run `make -j8` command instead which executes building in parallel threads)
 
 1. Run `make install`
 
