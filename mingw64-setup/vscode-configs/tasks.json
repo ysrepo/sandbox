@@ -1,38 +1,32 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "cppbuild",
-			"label": "C/C++: gcc.exe build active file",
-			"command": "C:/msys64/mingw64/bin/gcc.exe",
-			"args": [
-				"-fdiagnostics-color=always",
-				"-g",
-				{
-                    "value": "-IC:/msys64/mingw64/include/libavformat",
-                    "quoting": "escape"
-                },
-				"${file}",
-				"${fileDirname}\\prerequisite.c",
-				"${fileDirname}\\process_video.c",
-				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe",
-				 "-LC:/msys64/mingw64/lib",
-                "-lavformat", 
-                "-lavcodec", 
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: gcc.exe build active file",
+            "command": "C:\\msys64\\ucrt64\\bin\\gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "${fileDirname}\\prerequisite.c",
+                "${fileDirname}\\process_video.c",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-lavformat",
+                "-lavcodec",
                 "-lavutil"
-			],
-			"options": {
-				"cwd": "${fileDirname}"
-			},
-			"problemMatcher": [
-				"$gcc"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"detail": "compiler: C:/msys64/mingw64/bin/gcc.exe"
-		}
-	]
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
 }
