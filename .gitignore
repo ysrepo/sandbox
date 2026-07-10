@@ -3,4 +3,3 @@ test_task/main.exe
 test_task/main
 test_task/main.*
 test_task/*.pgm
-mingw64-setup/mingw64-ffmpeg-build
