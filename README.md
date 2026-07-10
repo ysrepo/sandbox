@@ -1,4 +1,4 @@
-### <u>This project guides how to include the FFmpeg library into the code and how to debug it with VS Code over "WSL: Ubuntu"</u> 
+### <u>This project guides how to include the FFmpeg library into the code and how to debug it with VS Code upon "WSL: Ubuntu"</u> 
 
 1) Install "WSL: Ubuntu" running in cmd `wsl --install` 
 
