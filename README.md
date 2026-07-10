@@ -1,12 +1,14 @@
 ### <u>This project guides how to include the FFmpeg library into the code and how to debug it with VS Code upon "WSL: Ubuntu"</u> 
 
+Target OS: Windows 11, development environment: "WSL: Ubuntu" 
+
 1. Install "WSL: Ubuntu" running in cmd `wsl --install` 
 
-   a. WSL goes along with Windows 11, therefore you need only install the appropriate Ubuntu distribution to it, Ubuntu is default Linux distribution on WSL, i.e. no need to explicitly specify that target is Ubuntu 
+   a. WSL comes out of the box with Windows 11, therefore it is needed only to install the appropriate Ubuntu distribution on it, Ubuntu is default Linux distribution on WSL, i.e. no need to explicitly specify that the target is Ubuntu 
 
 1. Open VS Code and choose the option in the menu on the Start page `Connect to...` (Crtl + Alt + O) and choose the item `Connect to WSL` in the showed pop-up dropdown 
 
-   a. In the result you will see in the left bottom corner of VS Code the clickable sign "WSL: Ubuntu" 
+   a. In the result the clickable sign "WSL: Ubuntu" appears in the left bottom corner of VS Code 
 
 1. Install C/C++ extensions for "WSL: Ubuntu" (`Install in WSL: Ubuntu`): 
 
@@ -42,17 +44,17 @@
 
    b. Verify installation `gcc --version` (I've checked with gcc 15.2.0 it worked fully compatibable) 
 
-1. Check if your current directory in the WSL terminal is `/home/user/` (it is usually displayed as `~`) and run `git clone https://github.com/ysrepo/sandbox.git` 
+1. Check whether your current directory in the WSL terminal is `/home/user` (it is usually displayed as `~`) and run `git clone https://github.com/ysrepo/sandbox.git` 
 
-1. Open in VS Code cloned folder (`File > Open Folder > /home/user/sandbox/`) 
+1. Open in VS Code cloned folder (`File > Open Folder > /home/user/sandbox`) 
 
 1. Remove Windows PATH inheritance in "WSL: Ubuntu" to avoid duplicate tools (name collisions) from Windows or other enviroments: 
 
-   a. For example, if Windows PATH has MinGW64 included and there is gcc tool, the "WSL: Ubuntu" may take gcc from there instead of calling its own. To avoid such confusion, this case gets fully excluded by this step 
+   a. For example, when Windows PATH has MinGW64 included and there is gcc tool, the "WSL: Ubuntu" may take gcc from there instead of calling its own. To avoid such confusion, this case gets fully excluded by this step 
 
    b. Open your "WSL: Ubuntu" terminal 
 
-   c. Open `/etc/wsl.conf` (`sudo nano /etc/wsl.conf` if permission for writing wasn't granted) 
+   c. Open `/etc/wsl.conf` (`sudo nano /etc/wsl.conf` when permission for writing wasn't granted) 
 
    d. Add the following lines to the file: 
       ```
@@ -66,13 +68,13 @@
 
    g. Reopen your Ubuntu (VS Code under WSL: Ubuntu as in step 2.) session and verify the path is no longer inherited: `echo $PATH` 
 
-   h. Verify if the displayed $PATH contains `/usr/local/lib`, otherwise manually add `/usr/local/lib` to the $PATH. It is a necessary requirement to start debugging. If `/usr/local/lib` isn't present in the current $PATH then: 
+   h. Verify whether the displayed $PATH contains `/usr/local/lib`, otherwise manually add `/usr/local/lib` to the $PATH. It is a necessary requirement to start debugging. In case that `/usr/local/lib` isn't present in the current $PATH then: 
 
-      - run `nano ~/.bashrc` or (`sudo nano ~/.bashrc` if permission for writing wasn't granted) 
+      - run `nano ~/.bashrc` or (`sudo nano ~/.bashrc` when permission for writing wasn't granted) 
 
       - scroll to the very bottom of the file 
 
-      - append the following line `export PATH="$PATH:/path/to/your/directory"` 
+      - append the following line `export PATH="$PATH:/usr/local/lib"` 
 
       - press Ctrl + O then Enter to save, and Ctrl + X to exit the editor 
 
@@ -94,7 +96,7 @@
 
 1. Run `make install` 
 
-   a. If it displays a message that says "install: Permission denied" try again with sudo `sudo make install` 
+   a. In case it displays a message that says "install: Permission denied" try again with sudo `sudo make install` 
 
    b. This will install needed binary FFmpeg files to "WSL: Ubuntu"'s PATH located by `/usr/local/bin`, `/usr/local/lib`, `/usr/local/include` 
 
