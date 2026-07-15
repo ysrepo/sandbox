@@ -101,3 +101,5 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
    b. This will install needed binary FFmpeg files to "WSL: Ubuntu"'s PATH located by `/usr/local/bin`, `/usr/local/lib`, `/usr/local/include` 
 
 1. Set the breakpoint somewhere on the FFmpeg method in `test_task/main.c` and step into the code 
+
+   a. In case of unexpected behavior, refer to [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, possibly it may help 
