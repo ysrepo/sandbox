@@ -66,7 +66,7 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
    f. Completely close (kill) your terminal, VS Code and open Command Prompt or PowerShell in Windows, and shut down WSL to apply the changes: `wsl --shutdown` 
 
-   g. Reopen your Ubuntu (VS Code under WSL: Ubuntu as in step 2.) session and verify the path is no longer inherited: `echo $PATH` 
+   g. Reopen your Ubuntu (VS Code upon "WSL: Ubuntu" as in step 2.) session and verify the path is no longer inherited: `echo $PATH` 
 
    h. Verify whether the displayed $PATH contains `/usr/local/lib`, otherwise manually add `/usr/local/lib` to the $PATH. It is a necessary requirement to start debugging. In case that `/usr/local/lib` isn't present in the current $PATH then: 
 
