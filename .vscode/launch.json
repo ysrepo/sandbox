@@ -33,7 +33,7 @@
             // this may occur due to internals temporary issues of VS Code
             // for example https://debuginfod.ubuntu.com/ doesn't respond
             // which is needed for gdb tool to work correctly in VS Code
-            // in this case for worked next workaround:
+            // in this case apply next workaround to fix problem:
             // downgrade C/C++ extension to v1.32.2
             // and add to .vscode/launch.json next snippet
             "customLaunchSetupCommands": [
