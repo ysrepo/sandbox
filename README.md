@@ -82,7 +82,11 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
 1. Run `sudo apt install nasm`. This is an additional necessary dependency to build FFmpeg from sources 
 
-1. Delete the FFmpeg directory (located on `sandbox/FFmpeg` containing a stub file named "here_files_from_ffmpeg_rep") which is cloned from the sandbox repository 
+1. Delete the FFmpeg directory (located on `sandbox/FFmpeg` containing a stub file named `here_files_from_ffmpeg_rep`) which is cloned from the sandbox repository 
+
+1. Run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep`
+
+   a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only with clarity purpose 
 
 1. Then run `git clone https://github.com/FFmpeg/FFmpeg.git` (this will newly create the FFmpeg folder at the place of the old one you just deleted and will clone sources from the origin repository) 
 
@@ -103,3 +107,5 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 1. Set the breakpoint somewhere on the FFmpeg method in `test_task/main.c` and step into the code 
 
    a. In case of unexpected behavior, refer to [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, possibly it may help 
+
+1. Open main.c (VS Code takes data for configs from currently active file opened in editor) and run it. The output files will be located in the folder `sandbox/dispatch` TODO: test_task directory... 
