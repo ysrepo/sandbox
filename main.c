@@ -6,8 +6,8 @@
 #include <libavcodec/avcodec.h>
 #include <libavutil/imgutils.h>
 
-#include "test_task/prerequisite.h"
-#include "test_task/process_video.h"
+#include "prerequisite.h"
+#include "process_video.h"
 
 int main(int argc, char *argv[]) {  
     
