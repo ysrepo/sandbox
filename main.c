@@ -6,12 +6,13 @@
 #include <libavcodec/avcodec.h>
 #include <libavutil/imgutils.h>
 
-#include "prerequisite.h"
-#include "process_video.h"
+#include "test_task/prerequisite.h"
+#include "test_task/process_video.h"
 
 int main(int argc, char *argv[]) {  
     
     _init_platform_consts();
+    _init_output_folder();
 
     if (!_platform_dependencies_processed) {
 
@@ -47,7 +48,7 @@ int main(int argc, char *argv[]) {
         perror("fmt_ctx error\n");
     }
 
-    printf("\ninput <filename>: %s, <output_directory>: %s\n\n", argv[1], _cwd);
+    printf("\ninput <filename>: %s, output <directory>: %s\n\n", argv[1], _output_folder_path);
 
     if (avformat_open_input(&fmt_ctx, argv[1], NULL, NULL) != 0) {
         perror("file opening error\n");

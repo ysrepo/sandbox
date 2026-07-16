@@ -1,5 +1,6 @@
 #include <unistd.h>
 
+
 #if defined(_WIN32)
     #include <windows.h>
     #define PATH_LIMIT MAX_PATH
@@ -18,11 +19,20 @@
     #define PATH_SEPARATOR -1
 #endif
 
+
 extern char _platform_dependencies_processed;
 
 extern char * _cwd;
 extern char _path_separator;
 
+extern char * _output_folder_path;
+
+
+void _init_platform_consts();
+
 void _init_cwd();
 void _init_path_separator();
-void _init_platform_consts();
+
+void _init_output_folder();
+void _init_output_folder_path();
+void _resolve_output_folder_path();

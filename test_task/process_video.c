@@ -43,7 +43,7 @@ int decode_packet(AVFormatContext * format_context, AVPacket * packet, AVCodecCo
                 frame_filename, 
                 sizeof(frame_filename), 
                 "%s%c%s-%d.pgm", 
-                _cwd, 
+                _output_folder_path, 
                 _path_separator, 
                 "frame", 
                 _frame_counter
