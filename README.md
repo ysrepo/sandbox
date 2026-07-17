@@ -4,7 +4,7 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
 1. Install "WSL: Ubuntu" running in cmd `wsl --install` 
 
-   a. WSL comes out of the box with Windows 11, therefore it is needed only to install the appropriate Ubuntu distribution on it, Ubuntu is default Linux distribution on WSL, i.e. no need to explicitly specify that the target is Ubuntu 
+   a. WSL comes out of the box with Windows 11, therefore it is needed only to install the Ubuntu distribution on it, Ubuntu is default Linux distribution on WSL, i.e. no need to explicitly specify that the target is Ubuntu 
 
 1. Open VS Code and choose the option in the menu on the Start page `Connect to...` (Crtl + Alt + O) and choose the item `Connect to WSL` in the showed pop-up dropdown 
 
@@ -84,7 +84,7 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
 1. Delete the FFmpeg directory (located on `sandbox/FFmpeg` containing a stub file named `here_files_from_ffmpeg_rep`) which is cloned from the sandbox repository 
 
-1. Run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep`
+1. Run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep` 
 
    a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only with clarity purpose 
 
@@ -92,11 +92,11 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
 1. In the terminal navigate into the cloned FFmpeg directory with sources and run `git checkout n8.1` (this tag version is checked and works fully compatible with code and is able for debugging) 
 
-1. Here in the `FFmpeg/` directory from the terminal further run `./configure --enable-shared --enable-static --enable-pic --enable-debug=3 --disable-optimizations --disable-stripping --extra-ldflags="-L/usr/local/lib -Wl,-rpath,/usr/local/lib" --extra-cflags="-Og -fno-omit-frame-pointer -fno-inline"` 
+1. Here in the `FFmpeg/` directory from the terminal run `./configure --enable-shared --enable-static --enable-pic --enable-debug=3 --disable-optimizations --disable-stripping --extra-ldflags="-L/usr/local/lib -Wl,-rpath,/usr/local/lib" --extra-cflags="-Og -fno-omit-frame-pointer -fno-inline"` 
 
 1. Run `make` and wait for compilation with build 
 
-   a. For speed-up sometimes it is possible to run the `make -j8` command instead which executes building in parallel threads 
+   a. For speed-up sometimes it is possible to run the `make -j8` command instead, which executes building in parallel threads 
 
 1. Run `make install` 
 
@@ -104,8 +104,14 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
    b. This will install needed binary FFmpeg files to "WSL: Ubuntu"'s PATH located by `/usr/local/bin`, `/usr/local/lib`, `/usr/local/include` 
 
-1. Set the breakpoint somewhere on the FFmpeg method in `test_task/main.c` and step into the code 
+1. Open the `main.c` file (VS Code takes data for configs to execute the program from the currently active file opened in the editor) and run it by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Run C/C++ file` option. The output files will be located in the folder `sandbox/dispatch` 
 
-   a. In case of unexpected behavior, refer to [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, possibly it may help 
+   a. Optionally clean working sets after this step: delete the `dispatch` directory, delete the `main` file to be sure that you begin next running/debugging iterations from the clear state again 
 
-1. Open main.c (VS Code takes data for configs from currently active file opened in editor) and run it. The output files will be located in the folder `sandbox/dispatch` TODO: test_task directory... 
+1. To debug: set the breakpoint somewhere on the FFmpeg method in `main.c`, for example, at line 51, i.e., at `main.c:51` 
+
+   a. Start debugging the `main.c` by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Debug C/C++ file` option 
+
+   b. The execution should pause in the debug mode at the breakpoint 
+
+   c. I had a crash kind of "permission denied for gdb", in case a similar occurred for you, refer to the [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, most likely, changes suggested there can settle such a failure 
