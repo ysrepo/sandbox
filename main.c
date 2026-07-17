@@ -10,11 +10,8 @@
 #include "process_video.h"
 
 int main(int argc, char *argv[]) {  
-    
-    _init_platform_consts();
-    _init_output_folder();
 
-    if (!_platform_dependencies_processed) {
+    if (_init_platform_consts() != SUCCESS) {
 
         perror(
             "Platform identifier (operating system) is not detected.\n \
@@ -23,6 +20,17 @@ int main(int argc, char *argv[]) {
         );
 
         return EXIT_FAILURE;
+    }
+
+    if (_init_output_folder() != SUCCESS) {
+
+        perror(
+            "Error during output folder initialization.\n \
+            The execution is terminated.\n"
+        );
+
+        return EXIT_FAILURE;
+
     }
 
     if (argc < 2) {
