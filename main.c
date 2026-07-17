@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
 
     if (argc < 2) {
 
+        // TODO possibly perror ?
         printf("Usage: %s <input_file>\n", argv[0]);
 
         return EXIT_FAILURE;
