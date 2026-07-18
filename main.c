@@ -9,6 +9,8 @@
 #include "prerequisite.h"
 #include "process_video.h"
 
+// TODO: refactor the main.c, split code into the blocks, move to separate files
+
 int main(int argc, char *argv[]) {  
 
     if (_init_platform_consts() != SUCCESS) {
@@ -35,7 +37,7 @@ int main(int argc, char *argv[]) {
 
     if (argc < 2) {
 
-        // TODO possibly perror ?
+        // TODO: possibly perror ?
         printf("Usage: %s <input_file>\n", argv[0]);
 
         return EXIT_FAILURE;

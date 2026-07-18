@@ -19,9 +19,11 @@ int decode_packet(AVFormatContext * format_context, AVPacket * packet, AVCodecCo
         response = avcodec_receive_frame(codex_context, frame);
 
         if (response == AVERROR(EAGAIN) || response == AVERROR_EOF) {
+            // TODO: debug and handle error properly
             printf("Error here, error code: %d. AVERROR(EAGAIN): %d, AVERROR_EOF: %d.\n", response, AVERROR(EAGAIN), AVERROR_EOF);
             break;
         } else if (response < 0) {
+            // TODO: debug and handle error properly
             printf("Error while receiving a frame to the decoder: %s", av_err2str(response));
         }
         

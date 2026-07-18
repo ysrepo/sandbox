@@ -19,7 +19,7 @@
     #define PATH_SEPARATOR '/'
 
     #include <sys/stat.h>
-    #define _resolve_path__unix__(path) mkdir(path, 0777); // TODO maybe replace 0777 with right flags
+    #define _resolve_path__unix__(path) mkdir(path, 0777); // TODO: maybe replace 0777 with right flags
 
     #define _resolve_path_OS(path) _resolve_path__unix__(path)
 
