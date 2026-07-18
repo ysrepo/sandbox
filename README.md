@@ -86,7 +86,7 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
 1. Run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep` 
 
-   a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only with clarity purpose 
+   a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only for clarity purpose 
 
 1. Then run `git clone https://github.com/FFmpeg/FFmpeg.git` (this will newly create the FFmpeg folder at the place of the old one you just deleted and will clone sources from the origin repository) 
 
@@ -114,4 +114,4 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
    b. The execution should pause in the debug mode at the breakpoint, you can step into the code of `avformat_alloc_context()` 
 
-   c. I had a crash kind of "permission denied for gdb", in case a similar occurred for you, refer to the [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, most likely, changes suggested there can settle such a failure 
+   c. I had a crash kind of "permission denied for gdb", in case a similar one occurred for you, refer to the [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, most likely, changes suggested there can settle such a failure 

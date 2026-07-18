@@ -12,7 +12,7 @@ Target OS: Windows 11, development environment: MSYS2 UCRT64
 
 1. Run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep` 
 
-   a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only with clarity purpose 
+   a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only for clarity purpose 
 
 1. Open git bash in PROJECT_PATH\sandbox directory (Ctrl + \`) and run `git clone https://github.com/FFmpeg/FFmpeg.git` 
 
