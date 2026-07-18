@@ -25,7 +25,7 @@
 
 #endif
 // in all other cases main terminates the execution
-// since the OS hasn't been determined (see main.c:14,:25)
+// since the OS hasn't been determined TODO: (see main.c:14,:25)
 
 #if !defined(PATH_LIMIT)
     #define PATH_LIMIT FAIL
