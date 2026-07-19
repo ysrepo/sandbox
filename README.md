@@ -10,13 +10,13 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
    a. In the result the clickable sign "WSL: Ubuntu" appears in the left bottom corner of VS Code 
 
-1. Install C/C++ extensions for "WSL: Ubuntu" (`Install in WSL: Ubuntu`): 
+1. In the VS Code install official C/C++ extensions for "WSL: Ubuntu" (`Install in WSL: Ubuntu`): 
 
    a. For this choose the last item in the left vertical menu (in the sidebar) in VS Code and type "C/C++" in the "Search Extensions in Marketplace" field 
 
-   b. Choose "C/C++ Extension Pack" and click the appropriate "Install in WSL: Ubuntu" blue button 
+   b. Choose "C/C++ Extension Pack" and click the appropriate "Install in WSL: Ubuntu" button 
 
-   c. This will install 4 needed extensions at once 
+   c. This will install 4 needed extensions (C/C++, C/C++ DevTools, C/C++ Extension Pack, C/C++ Themes) at once 
 
 1. Open terminal (Ctrl + \`) 
 
@@ -102,7 +102,7 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
    a. In case it displays a message that says "install: Permission denied" try again with sudo `sudo make install` 
 
-   b. This will install needed binary FFmpeg files to "WSL: Ubuntu"'s PATH located by `/usr/local/bin`, `/usr/local/lib`, `/usr/local/include` 
+   b. This installs needed binary FFmpeg files to "WSL: Ubuntu"'s $PATH into directories `/usr/local/bin` (usually presents in $PATH by default), `/usr/local/lib` (this directory was discussed in steps 8.g-h. here). And installs header files `.h` into `/usr/local/include` (then the gcc preprocessor searches for header files `.h` in the given directory; it is possible to check that gcc searches header files there by running in the "WSL: Ubuntu" terminal command `` `gcc -print-prog-name=cpp` -v`` (with backticks) and then find locations after the `#include <...> search starts here:` line) 
 
 1. Open the `main.c` file (VS Code takes data for configs to execute the program from the currently active file opened in the editor) and run it by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Run C/C++ file` option. The output files will be located in the folder `sandbox/dispatch` 
 
