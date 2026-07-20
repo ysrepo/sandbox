@@ -15,10 +15,14 @@ int main(int argc, char *argv[]) {
 
     if (_init_platform_consts() != SUCCESS) {
 
-        perror(
-            "Platform identifier (operating system) is not detected.\n \
-            Neither Windows API nor Unix API found.\n \
-            The execution is terminated.\n"
+        fprintf(
+            stderr,
+
+            "\n\
+The program entered the ERROR: \n\
+platform identifier (operating system) is not detected. \n\
+Neither Windows API nor Unix API found. \n\
+The execution is terminated. \n\n"
         );
 
         return EXIT_FAILURE;
@@ -26,9 +30,13 @@ int main(int argc, char *argv[]) {
 
     if (_init_output_folder() != SUCCESS) {
 
-        perror(
-            "Error during output folder initialization.\n \
-            The execution is terminated.\n"
+        fprintf(
+            stderr,
+
+            "\n\
+The program entered the ERROR: \n\
+cannot initialize the output folder. \n\
+The execution is terminated. \n\n"
         );
 
         return EXIT_FAILURE;
@@ -37,8 +45,16 @@ int main(int argc, char *argv[]) {
 
     if (argc < 2) {
 
-        // TODO: possibly perror ?
-        printf("Usage: %s <input_file>\n", argv[0]);
+        fprintf(
+            stderr,
+
+            "\n\
+The program entered the ERROR: \n\
+program usage: \"%s\" <input_file>. \n\
+Please provide after the program name the filename. \n\
+The execution is terminated. \n\n", 
+            argv[0]
+        );
 
         return EXIT_FAILURE;
     }
@@ -56,13 +72,13 @@ int main(int argc, char *argv[]) {
     // at compile-time regardless whether the fmt_ctx was initialized or not
     // printf("size of struct variable after allocation: %zu bytes\n", sizeof(*fmt_ctx)); 
     if (!fmt_ctx) {
-        perror("fmt_ctx error\n");
+        fprintf(stderr, "fmt_ctx error\n");
     }
 
     printf("\ninput <filename>: %s, output <directory>: %s\n\n", argv[1], _output_folder_path);
 
     if (avformat_open_input(&fmt_ctx, argv[1], NULL, NULL) != 0) {
-        perror("file opening error\n");
+        fprintf(stderr, "file opening error\n");
     }
 
     // 1. Open the file and read its header 
