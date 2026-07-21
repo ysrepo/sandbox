@@ -4,19 +4,19 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
 1. Install "WSL: Ubuntu" running in cmd `wsl --install` 
 
-   a. WSL comes out of the box with Windows 11, therefore it is needed only to install the appropriate Ubuntu distribution on it, Ubuntu is default Linux distribution on WSL, i.e. no need to explicitly specify that the target is Ubuntu 
+   a. WSL comes out of the box with Windows 11, therefore it is needed only to install the Ubuntu distribution on it, Ubuntu is default Linux distribution on WSL, i.e. no need to explicitly specify that the target is Ubuntu 
 
 1. Open VS Code and choose the option in the menu on the Start page `Connect to...` (Crtl + Alt + O) and choose the item `Connect to WSL` in the showed pop-up dropdown 
 
    a. In the result the clickable sign "WSL: Ubuntu" appears in the left bottom corner of VS Code 
 
-1. Install C/C++ extensions for "WSL: Ubuntu" (`Install in WSL: Ubuntu`): 
+1. In the VS Code install official C/C++ extensions for "WSL: Ubuntu" (`Install in WSL: Ubuntu`): 
 
    a. For this choose the last item in the left vertical menu (in the sidebar) in VS Code and type "C/C++" in the "Search Extensions in Marketplace" field 
 
-   b. Choose "C/C++ Extension Pack" and click the appropriate "Install in WSL: Ubuntu" blue button 
+   b. Choose "C/C++ Extension Pack" and click the appropriate "Install in WSL: Ubuntu" button 
 
-   c. This will install 4 needed extensions at once 
+   c. This will install 4 needed extensions (C/C++, C/C++ DevTools, C/C++ Extension Pack, C/C++ Themes) at once 
 
 1. Open terminal (Ctrl + \`) 
 
@@ -82,24 +82,36 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
 1. Run `sudo apt install nasm`. This is an additional necessary dependency to build FFmpeg from sources 
 
-1. Delete the FFmpeg directory (located on `sandbox/FFmpeg` containing a stub file named "here_files_from_ffmpeg_rep") which is cloned from the sandbox repository 
+1. Delete the FFmpeg directory (located on `sandbox/FFmpeg` containing a stub file named `here_files_from_ffmpeg_rep`) which is cloned from the sandbox repository 
+
+1. Run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep` 
+
+   a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only for clarity purpose 
 
 1. Then run `git clone https://github.com/FFmpeg/FFmpeg.git` (this will newly create the FFmpeg folder at the place of the old one you just deleted and will clone sources from the origin repository) 
 
 1. In the terminal navigate into the cloned FFmpeg directory with sources and run `git checkout n8.1` (this tag version is checked and works fully compatible with code and is able for debugging) 
 
-1. Here in the `FFmpeg/` directory from the terminal further run `./configure --enable-shared --enable-static --enable-pic --enable-debug=3 --disable-optimizations --disable-stripping --extra-ldflags="-L/usr/local/lib -Wl,-rpath,/usr/local/lib" --extra-cflags="-Og -fno-omit-frame-pointer -fno-inline"` 
+1. Here in the `FFmpeg/` directory from the terminal run `./configure --enable-shared --enable-static --enable-pic --enable-debug=3 --disable-optimizations --disable-stripping --extra-ldflags="-L/usr/local/lib -Wl,-rpath,/usr/local/lib" --extra-cflags="-Og -fno-omit-frame-pointer -fno-inline"` 
 
 1. Run `make` and wait for compilation with build 
 
-   a. For speed-up sometimes it is possible to run the `make -j8` command instead which executes building in parallel threads 
+   a. For speed-up sometimes it is possible to run the `make -j8` command instead, which executes building in parallel threads 
 
 1. Run `make install` 
 
    a. In case it displays a message that says "install: Permission denied" try again with sudo `sudo make install` 
 
-   b. This will install needed binary FFmpeg files to "WSL: Ubuntu"'s PATH located by `/usr/local/bin`, `/usr/local/lib`, `/usr/local/include` 
+   b. This installs needed binary FFmpeg files to "WSL: Ubuntu"'s $PATH into directories `/usr/local/bin` (usually presents in $PATH by default), `/usr/local/lib` (this directory was discussed in steps 8.g-h. here). And installs header files `.h` into `/usr/local/include` (then the gcc preprocessor searches for header files `.h` in the given directory; it is possible to check that gcc searches header files there by running in the "WSL: Ubuntu" terminal command `` `gcc -print-prog-name=cpp` -v`` (with backticks) and then find locations after the `#include <...> search starts here:` line) 
 
-1. Set the breakpoint somewhere on the FFmpeg method in `test_task/main.c` and step into the code 
+1. Open the `main.c` file (VS Code takes data for configs to execute the program from the currently active file opened in the editor) and run it by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Run C/C++ file` option. The output files will be located in the folder `sandbox/dispatch` 
 
-   a. In case of unexpected behavior, refer to [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, possibly it may help 
+   a. Optionally clean working sets after this step: delete the `dispatch` directory, delete the `main` file to be sure that you start next running/debugging iterations from the state of the very beginning again 
+
+1. To debug: set the breakpoint somewhere on the FFmpeg method in `main.c`, for example, at line 51, i.e., at `main.c:51` 
+
+   a. Start debugging the `main.c` by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Debug C/C++ file` option 
+
+   b. The execution should pause in the debug mode at the breakpoint, you can step into the code of `avformat_alloc_context()` 
+
+   c. I had a crash kind of "permission denied for gdb", in case a similar one occurred for you, refer to the [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, most likely, changes suggested there can settle such a failure 

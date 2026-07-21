@@ -10,7 +10,11 @@ Target OS: Windows 11, development environment: MSYS2 UCRT64
 
 1. Delete FFmpeg folder in PROJECT_PATH\sandbox directory 
 
-1. Open git bash in PROJECT_PATH\sandbox directory (Ctrl + \`) and run `git clone https://github.com/FFmpeg/FFmpeg.git` 
+1. Run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep` 
+
+   a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only for clarity purpose 
+
+1. Open git bash in PROJECT_PATH\sandbox directory (Ctrl + \`) and run `git clone https://github.com/FFmpeg/FFmpeg.git` (this will newly create the FFmpeg folder at the place of the old one you just deleted and will clone sources from the origin repository) 
 
 1. In git bash run `cd FFmpeg` 
 
@@ -42,10 +46,6 @@ Target OS: Windows 11, development environment: MSYS2 UCRT64
 
     a. When in your case path differs then replace "path" value to your MSYS2_PATH 
 
-1. Close all open integrated terminals and re-open VS Code 
-
-    a. Note sometimes on different machines software behaves differently, maybe there is need to run the VS Code with Admin Rights 
-
 1. Open terminals (Ctrl + \`) and open `MSYS2 UCRT64` terminal in VS Code and navigate to `cd PROJECT_PATH\FFmpeg` 
 
 1. In `MSYS2 UCRT64` terminal run `pacman -Syuu` to update packages 
@@ -60,27 +60,49 @@ Target OS: Windows 11, development environment: MSYS2 UCRT64
 
 1. Run `make` and wait for compilation with build 
 
-   a. For speed-up sometimes it is possible to run the `make -j8` command instead which executes building in parallel threads 
+   a. For speed-up sometimes it is possible to run the `make -j8` command instead, which executes building in parallel threads 
 
 1. Run `make install` 
 
 1. Run the `ffmpeg` command in terminal
 
-    a. The output should contain info about versions what assures that installation procced successfully and command/binaries is/are accessible 
+    a. The output should contain info about versions what assures that installation proceed successfully and command/binaries is/are accessible 
 
-1. In VS Code install official C/C++ extentions packs, for me installing C/C++ extention automatically installed 3 more others (C/C++ DevTools, C/C++ Extension Pack, C/C++ Themes) 
+1. In the VS Code install official C/C++ extensions: 
+
+   a. For this choose the last item in the left vertical menu (in the sidebar) in VS Code and type "C/C++" in the "Search Extensions in Marketplace" field 
+
+   b. Choose "C/C++ Extension Pack" and click the appropriate "Install" button 
+
+   c. This will install 4 needed extensions (C/C++, C/C++ DevTools, C/C++ Extension Pack, C/C++ Themes) at once 
 
 1. Add `MSYS2_PATH\ucrt64\bin` to Windows %PATH% (e.g. `C:\msys64\ucrt64\bin` in my case) 
 
     a. Without it on %PATH% gcc.exe gives errors and doesn't compile project even when full path to gcc.exe is set in VS Code configs 
 
+    b. One more note: even after adding `MSYS2_PATH\ucrt64\bin` to the %PATH% I still kept receiving errors during running the `main.c`, putting the `MSYS2_PATH\ucrt64\bin` at the top of the %PATH% cleared for me those errors 
+
+1. Close all open integrated terminals and re-open VS Code 
+
+    a. Note: sometimes on different machines software behaves differently, maybe there is need to run the VS Code with Admin Rights 
+
 1. Edit (replace) `PROJECT_PATH\.vscode\launch.json`, refer to `PROJECT_PATH\000-ucrt64-setup\vscode-configs\launch.json` 
+
+    a. Pay attention to the `"miDebuggerPath"`'s value, in case your MSYS2_PATH differs, then set the correct one for you 
 
 1. Edit (replace) `PROJECT_PATH\.vscode\task.json`, refer to `PROJECT_PATH\000-ucrt64-setup\vscode-configs\tasks.json` 
 
-1. Set the breakpoint let's say on the 47th line in `main.c` located in `PROJECT_PATH\test_task\`, launch debug by clicking on run dropdown and choosing "Debug C/C++ File" and step into the code of `avformat_alloc_context()` 
+    a. Pay attention to the `"command"`'s value, in case your MSYS2_PATH differs, then set the correct one for you 
+
+1. Open the `main.c` file (VS Code takes data for configs to execute the program from the currently active file opened in the editor) and run it by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Run C/C++ file` option. The output files will be located in the folder `sandbox/dispatch` 
+
+   a. Optionally clean working sets after this step: delete the `dispatch` directory, delete the `main.exe` file to be sure that you start next running/debugging iterations from the state of the very beginning again 
+
+1. To debug: set the breakpoint somewhere on the FFmpeg method in `main.c`, for example, at line 51, i.e., at `main.c:51` 
+
+   a. Start debugging the `main.c` by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Debug C/C++ file` option 
+
+   b. The execution should pause in the debug mode at the breakpoint, you can step into the code of `avformat_alloc_context()` 
 
 1. Enjoy debugging! =) 
-
-1. 
 

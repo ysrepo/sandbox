@@ -8,9 +8,10 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                "-I${fileDirname}\\include",
                 "${file}",
-                "${fileDirname}\\prerequisite.c",
-                "${fileDirname}\\process_video.c",
+                "${fileDirname}\\src\\prerequisite.c",
+                "${fileDirname}\\src\\process_video.c",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-lavformat",

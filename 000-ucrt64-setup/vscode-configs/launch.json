@@ -8,7 +8,7 @@
             "name": "C/C++: gcc.exe build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}\\main.exe",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": ["${fileDirname}\\file_example_MP4_1920_18MG.mp4"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
