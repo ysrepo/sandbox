@@ -65,6 +65,7 @@ The execution is terminated. \n\n",
     fprintf(stdout, "\ninput <filename>: %s, output <directory>: %s\n\n", argv[1], _output_folder_path);
 
     if (process_video(argv[1]) != SUCCESS) {
+
         fprintf(
             stderr,
 
@@ -74,6 +75,7 @@ The execution is terminated. \n\n"
         );
 
         return EXIT_FAILURE;
+
     }
 
     return EXIT_SUCCESS;
