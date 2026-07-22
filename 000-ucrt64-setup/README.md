@@ -98,7 +98,7 @@ Target OS: Windows 11, development environment: MSYS2 UCRT64
 
    a. Optionally clean working sets after this step: delete the `dispatch` directory, delete the `main.exe` file to be sure that you start next running/debugging iterations from the state of the very beginning again 
 
-1. To debug: set the breakpoint somewhere on the FFmpeg method in `main.c`, for example, at line 51, i.e., at `main.c:51` 
+1. To debug: set the breakpoint somewhere on the FFmpeg method in `main.c`, for example, at line 87, i.e., at `main.c:87` 
 
    a. Start debugging the `main.c` by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Debug C/C++ file` option 
 
