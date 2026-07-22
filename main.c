@@ -11,7 +11,9 @@
 
 // TODO: refactor the main.c, split code into the blocks, move to separate files
 
-int main(int argc, char *argv[]) {  
+int process_video(char * filename);
+
+int main(int argc, char * argv[]) {  
 
     if (_init_platform_consts() != SUCCESS) {
 
@@ -43,6 +45,8 @@ The execution is terminated. \n\n"
 
     }
 
+    // argc - argument count - the total numer of arguments passed to the program
+    // argv[] - argument vector - the list of values of these arguments passed to the program
     if (argc < 2) {
 
         fprintf(
@@ -59,12 +63,27 @@ The execution is terminated. \n\n",
         return EXIT_FAILURE;
     }
 
+    // the same as to log(...)
+    fprintf(stdout, "\ninput <filename>: %s, output <directory>: %s\n\n", argv[1], _output_folder_path);
+
+    if (process_video(argv[1]) != SUCCESS) {
+        fprintf(
+            stderr,
+
+            "\n\
+An ERROR has occurred during video processing. \n\
+The execution is terminated. \n\n"
+        );
+
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int process_video(char * filename) {
     AVFormatContext *fmt_ctx = NULL; 
     int video_stream_index = -1;
-
-    // _analyze_pointer_workflow(fmt_ctx); // studing
-
-    // printf("size of struct variable before allocation: %zu bytes\n", sizeof(*fmt_ctx));
 
     fmt_ctx = avformat_alloc_context();
 
@@ -75,9 +94,7 @@ The execution is terminated. \n\n",
         fprintf(stderr, "fmt_ctx error\n");
     }
 
-    printf("\ninput <filename>: %s, output <directory>: %s\n\n", argv[1], _output_folder_path);
-
-    if (avformat_open_input(&fmt_ctx, argv[1], NULL, NULL) != 0) {
+    if (avformat_open_input(&fmt_ctx, filename, NULL, NULL) != 0) {
         fprintf(stderr, "file opening error\n");
     }
 
@@ -85,7 +102,7 @@ The execution is terminated. \n\n",
     if (avformat_find_stream_info(fmt_ctx, NULL) < 0) {
         printf("av_log\n");
         av_log(NULL, AV_LOG_ERROR, "Could not open source\n");
-        return EXIT_FAILURE;
+        return FAIL;
     }
     
     // search video stream and store the codec context out of it into _video_codec_context pointer variable
@@ -147,5 +164,5 @@ The execution is terminated. \n\n",
     // 3. close the context and free resources
     avformat_close_input(&fmt_ctx);
 
-    return EXIT_SUCCESS;
+    return SUCCESS;
 }
