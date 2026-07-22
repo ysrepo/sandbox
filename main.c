@@ -9,8 +9,6 @@
 #include "prerequisite.h"
 #include "process_video.h"
 
-// TODO: refactor the main.c, split code into the blocks, move to separate files
-
 int process_video(char * filename);
 
 int main(int argc, char * argv[]) {  
@@ -81,6 +79,7 @@ The execution is terminated. \n\n"
     return EXIT_SUCCESS;
 }
 
+// TODO: refactor the process_video(...), split code into blocks, move to separate files
 int process_video(char * filename) {
     AVFormatContext *fmt_ctx = NULL; 
     int video_stream_index = -1;
