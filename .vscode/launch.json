@@ -44,12 +44,12 @@
                 },
                 {
                     "description": "Specify runnable file",
-                    "text": "-file-exec-and-symbols /home/user/sandbox/test_task/main",
+                    "text": "-file-exec-and-symbols /home/user/sandbox/main",
                     "ignoreFailures": true
                 },
                 {
                     "description": "Specify args to runnable file",
-                    "text": "set args /home/user/sandbox/test_task/file_example_MP4_1920_18MG.mp4",
+                    "text": "set args /home/user/sandbox/file_example_MP4_1920_18MG.mp4",
                     "ignoreFailures": true
                 }
             ],
