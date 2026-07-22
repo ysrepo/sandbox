@@ -38,7 +38,7 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
          }
          ``` 
 
-1. Install C/C++ compiler and needed tools on "WSL: Ubuntu" by running next commands in terminal: 
+1. Install C/C++ compiler and needed tools on "WSL: Ubuntu" by running next commands in the "WSL: Ubuntu" terminal: 
 
    a. Run `sudo apt update`, `sudo apt install build-essential gdb` 
 
@@ -66,7 +66,7 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
    f. Completely close (kill) your terminal, VS Code and open Command Prompt or PowerShell in Windows, and shut down WSL to apply the changes: `wsl --shutdown` 
 
-   g. Reopen your Ubuntu (VS Code upon "WSL: Ubuntu" as in step 2.) session and verify the path is no longer inherited: `echo $PATH` 
+   g. Reopen your Ubuntu (VS Code upon "WSL: Ubuntu" as in step 2.) session and verify the path is no longer inherited: run in the "WSL: Ubuntu" terminal `echo $PATH` 
 
    h. Verify whether the displayed $PATH contains `/usr/local/lib`, otherwise manually add `/usr/local/lib` to the $PATH. It is a necessary requirement to start debugging. In case that `/usr/local/lib` isn't present in the current $PATH then: 
 
@@ -80,17 +80,17 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
       - apply the changes immediately to your current terminal session by running `source ~/.bashrc` 
 
-1. Run `sudo apt install nasm`. This is an additional necessary dependency to build FFmpeg from sources 
+1. In the "WSL: Ubuntu" terminal run `sudo apt install nasm`. This is an additional necessary dependency to build FFmpeg from sources 
 
 1. Delete the FFmpeg directory (located on `sandbox/FFmpeg` containing a stub file named `here_files_from_ffmpeg_rep`) which is cloned from the sandbox repository 
 
-1. Run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep` 
+1. In the "WSL: Ubuntu" terminal run `git update-index --skip-worktree ./FFmpeg/here_files_from_ffmpeg_rep` 
 
    a. This will untrack from git changes the deleted stub file named `here_files_from_ffmpeg_rep`, which is present only for clarity purpose 
 
 1. Then run `git clone https://github.com/FFmpeg/FFmpeg.git` (this will newly create the FFmpeg folder at the place of the old one you just deleted and will clone sources from the origin repository) 
 
-1. In the terminal navigate into the cloned FFmpeg directory with sources and run `git checkout n8.1` (this tag version is checked and works fully compatible with code and is able for debugging) 
+1. In the "WSL: Ubuntu" terminal navigate into the cloned FFmpeg directory with sources and run `git checkout n8.1` (this tag version is checked and works fully compatible with code and is able for debugging) 
 
 1. Here in the `FFmpeg/` directory from the terminal run `./configure --enable-shared --enable-static --enable-pic --enable-debug=3 --disable-optimizations --disable-stripping --extra-ldflags="-L/usr/local/lib -Wl,-rpath,/usr/local/lib" --extra-cflags="-Og -fno-omit-frame-pointer -fno-inline"` 
 
@@ -98,7 +98,7 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
    a. For speed-up sometimes it is possible to run the `make -j8` command instead, which executes building in parallel threads 
 
-1. Run `make install` 
+1. In the "WSL: Ubuntu" terminal run `make install` 
 
    a. In case it displays a message that says "install: Permission denied" try again with sudo `sudo make install` 
 
