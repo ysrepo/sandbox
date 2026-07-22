@@ -2,7 +2,7 @@
 #include <libavcodec/avcodec.h>
 #include <libavutil/imgutils.h>
 
-// TODO duplicate #includes ???
+// TODO: duplicate #includes ???
 
 char *_arg_to_string(void * sample) {
     char * result = malloc(sizeof(char[32]));
