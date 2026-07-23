@@ -11,6 +11,7 @@
 				"-I${fileDirname}/include",
 				"${file}",
 				"${fileDirname}/src/prerequisite.c",
+				"${fileDirname}/src/log.c",
 				"${fileDirname}/src/process_video.c",
 				"-o",
 				"${fileDirname}/${fileBasenameNoExtension}",
