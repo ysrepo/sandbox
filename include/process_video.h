@@ -1,7 +1,9 @@
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
 
-static int _frame_counter = 0;
+extern int _frame_counter;
+
+int process_video(char * filename);
 
 int decode_packet(
     AVFormatContext * format_context, 
