@@ -17,6 +17,7 @@ int main(int argc, char * argv[]) {
         label_log(ERROR, PLATFORM_CONSTANTS_INITIALIZATION_ERROR);
 
         return EXIT_FAILURE;
+
     }
 
     if (_init_output_folder() != SUCCESS) {
@@ -27,13 +28,14 @@ int main(int argc, char * argv[]) {
 
     }
 
-    // argc - argument count - the total numer of arguments passed to the program
-    // argv[] - argument vector - the list of values of these arguments passed to the program
     if (argc < 2) {
+        // argc - argument count - the total numer of arguments passed to the program
+        // argv[] - argument vector - the list of values of these arguments passed to the program
 
         label_log(ERROR, INPUT_FILE_MISSED_ERROR, argv[0]);
 
         return EXIT_FAILURE;
+
     }
 
     label_log(INFO, CURRENT_EXECUTION_INFO, argv[1], _output_folder_path);

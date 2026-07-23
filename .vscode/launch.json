@@ -13,6 +13,7 @@
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
+            "targetArchitecture": "x64",
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
@@ -25,6 +26,30 @@
                 {
                     "description": "Set Disassembly Flavor to Intel",
                     "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            // if debbugger doesn't stop at breakpoints or produces errors
+            // this may occur due to internals temporary issues of VS Code
+            // for example https://debuginfod.ubuntu.com/ doesn't respond
+            // which is needed for gdb tool to work correctly in VS Code
+            // in this case apply next workaround to fix problem:
+            // downgrade C/C++ extension to v1.32.2
+            // and add to .vscode/launch.json next snippet
+            "customLaunchSetupCommands": [
+                {
+                    "description": "Disable debuginfod",
+                    "text": "set debuginfod enabled off",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Specify runnable file",
+                    "text": "-file-exec-and-symbols /home/user/sandbox/main",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Specify args to runnable file",
+                    "text": "set args /home/user/sandbox/file_example_MP4_1920_18MG.mp4",
                     "ignoreFailures": true
                 }
             ],
