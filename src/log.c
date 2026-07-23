@@ -26,6 +26,10 @@ The execution is terminated. \n\n";
 const char* CURRENT_EXECUTION_INFO = "\n\
 input <filename>: %s, output <directory>: %s \n\n";
 
+const char* EXIT_SUCCESS_INFO = "\n\
+The program finished execution successfully. \n\
+It returns to the calling environment. \n\n";
+
 void label_log(enum LOG_TYPE log_type, const char * message, ...) {
     
     va_list args;

@@ -6,6 +6,7 @@ extern const char* INPUT_FILE_MISSED_ERROR;
 extern const char* VIDEO_PROCESSING_ERROR;
 
 extern const char* CURRENT_EXECUTION_INFO;
+extern const char* EXIT_SUCCESS_INFO;
 
 enum LOG_TYPE {
     INFO_MESSAGE,
