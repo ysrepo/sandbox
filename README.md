@@ -108,10 +108,12 @@ Target OS: Windows 11, development environment: "WSL: Ubuntu"
 
    a. Necessarily clean working sets after this step: delete the `dispatch` directory, delete the `main` file to be sure that you start next running/debugging iterations from the state of the very beginning again, otherwise the error will occur that output folder (`dispatch`) cannot be initialized 
 
-1. To debug: set the breakpoint somewhere on the FFmpeg method in `main.c`, for example, at line 59, i.e., at `main.c:59` 
+1. To debug: set the breakpoint somewhere on the FFmpeg method for example, in `src/process_video.c`,  at line 14, i.e., at `process_video.c:14` 
 
-   a. Start debugging the `main.c` by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Debug C/C++ file` option 
+   a. Start debugging by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Debug C/C++ file` option 
 
-   b. The execution should pause in the debug mode at the breakpoint, you can step into the code of `avformat_alloc_context()` 
+   b. Note! Click, i.e., run the `Debug C/C++ file` with the `main.c` file active and opened in the editor, regardless that the breakpoint is set inside of other file `src/process_video.c`. Once more, the VS Code takes configs for running/debugging from the active file in the editor, this is why it is so important to run exactly with `main.c` opened. The program will pause at your breakpoint in the other file anyway 
 
-   c. I had a crash kind of "permission denied for gdb", in case a similar one occurred for you, refer to the [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, most likely, changes suggested there can settle such a failure 
+   c. The execution should pause in the debug mode at the breakpoint, you can step into the code of `avformat_alloc_context()` 
+
+   d. I had a crash kind of "permission denied for gdb", in case a similar one occurred for you, refer to the [`wsl_ubuntu_gdb_fix`](https://github.com/ysrepo/sandbox/compare/main...wsl_ubuntu_gdb_fix) branch, most likely, changes suggested there can settle such a failure 
