@@ -7,37 +7,23 @@
 #include <libavutil/imgutils.h>
 
 #include "prerequisite.h"
+#include "log.h"
 #include "process_video.h"
 
 int process_video(char * filename);
 
-int main(int argc, char * argv[]) {  
+int main(int argc, char * argv[]) { 
 
     if (_init_platform_consts() != SUCCESS) {
 
-        fprintf(
-            stderr,
-
-            "\n\
-The program entered the ERROR: \n\
-platform identifier (operating system) is not detected. \n\
-Neither Windows API nor Unix API found. \n\
-The execution is terminated. \n\n"
-        );
+        label_log(ERROR, PLATFORM_CONSTANTS_INITIALIZATION_ERROR);
 
         return EXIT_FAILURE;
     }
 
     if (_init_output_folder() != SUCCESS) {
 
-        fprintf(
-            stderr,
-
-            "\n\
-The program entered the ERROR: \n\
-cannot initialize the output folder. \n\
-The execution is terminated. \n\n"
-        );
+        label_log(ERROR, OUTPUT_FOLDER_INITIALIZATION_ERROR);
 
         return EXIT_FAILURE;
 
@@ -47,32 +33,16 @@ The execution is terminated. \n\n"
     // argv[] - argument vector - the list of values of these arguments passed to the program
     if (argc < 2) {
 
-        fprintf(
-            stderr,
-
-            "\n\
-The program entered the ERROR: \n\
-program usage: \"%s\" <input_file>. \n\
-Please provide after the program name the filename. \n\
-The execution is terminated. \n\n", 
-            argv[0]
-        );
+        label_log(ERROR, INPUT_FILE_MISSED_ERROR, argv[0]);
 
         return EXIT_FAILURE;
     }
 
-    // the same as to log(...)
-    fprintf(stdout, "\ninput <filename>: %s, output <directory>: %s\n\n", argv[1], _output_folder_path);
+    label_log(INFO, CURRENT_EXECUTION_INFO, argv[1], _output_folder_path);
 
     if (process_video(argv[1]) != SUCCESS) {
 
-        fprintf(
-            stderr,
-
-            "\n\
-An ERROR has occurred during video processing. \n\
-The execution is terminated. \n\n"
-        );
+        label_log(ERROR, VIDEO_PROCESSING_ERROR);
 
         return EXIT_FAILURE;
 
