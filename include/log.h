@@ -8,8 +8,8 @@ extern const char* VIDEO_PROCESSING_ERROR;
 extern const char* CURRENT_EXECUTION_INFO;
 
 enum LOG_TYPE {
-    INFO,
-    ERROR
+    INFO_MESSAGE,
+    ERROR_MESSAGE
 };
 
 void label_log(enum LOG_TYPE log_type, const char * message, ...);
