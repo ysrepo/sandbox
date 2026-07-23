@@ -48,5 +48,7 @@ int main(int argc, char * argv[]) {
 
     }
 
+    label_log(INFO_MESSAGE, EXIT_SUCCESS_INFO);
+
     return EXIT_SUCCESS;
 } 
