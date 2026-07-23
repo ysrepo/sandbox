@@ -96,9 +96,9 @@ Target OS: Windows 11, development environment: MSYS2 UCRT64
 
 1. Open the `main.c` file (VS Code takes data for configs to execute the program from the currently active file opened in the editor) and run it by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Run C/C++ file` option. The output files will be located in the folder `sandbox/dispatch` 
 
-   a. Optionally clean working sets after this step: delete the `dispatch` directory, delete the `main.exe` file to be sure that you start next running/debugging iterations from the state of the very beginning again 
+   a. Necessarily clean working sets after this step: delete the `dispatch` directory, delete the `main.exe` file to be sure that you start next running/debugging iterations from the state of the very beginning again, otherwise the error will occur that output folder (`dispatch`) cannot be initialized 
 
-1. To debug: set the breakpoint somewhere on the FFmpeg method in `main.c`, for example, at line 87, i.e., at `main.c:87` 
+1. To debug: set the breakpoint somewhere on the FFmpeg method in `main.c`, for example, at line 59, i.e., at `main.c:59` 
 
    a. Start debugging the `main.c` by clicking in the right top area of the VS Code window on the appropriate button with the dropdown choosing the `Debug C/C++ file` option 
 
