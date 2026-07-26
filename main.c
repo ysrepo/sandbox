@@ -1,11 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-
-#include <libavformat/avformat.h>
-#include <libavcodec/avcodec.h>
-#include <libavutil/imgutils.h>
-
 #include "prerequisite.h"
 #include "log.h"
 #include "process_video.h"
@@ -29,7 +21,7 @@ int main(int argc, char * argv[]) {
     }
 
     if (argc < 2) {
-        // argc - argument count - the total numer of arguments passed to the program
+        // argc - argument count - the total number of arguments passed to the program
         // argv[] - argument vector - the list of values of these arguments passed to the program
 
         label_log(ERROR_MESSAGE, INPUT_FILE_MISSED_ERROR, argv[0]);
