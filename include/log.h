@@ -1,6 +1,8 @@
 #include <stdarg.h>
 
 extern const char* PLATFORM_CONSTANTS_INITIALIZATION_ERROR;
+extern const char* OUTPUT_FOLDER_EXISTS_ERROR;
+extern const char* OUTPUT_FOLDER_CODE_ERROR;
 extern const char* OUTPUT_FOLDER_INITIALIZATION_ERROR;
 extern const char* INPUT_FILE_MISSED_ERROR;
 extern const char* VIDEO_PROCESSING_ERROR;

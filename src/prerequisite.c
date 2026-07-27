@@ -1,8 +1,12 @@
 #include "prerequisite.h"
 
+#include "log.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <errno.h>
 
 
 const char * _OUTPUT_FOLDER_NAME = "dispatch";
@@ -16,12 +20,12 @@ char * _output_folder_path = NULL;
 unsigned char _init_platform_consts() {    
     
     if (_init_cwd() != SUCCESS) {
-        // TODO: add fprintf stderr
+        // TODO: add label_log error
         return FAIL;
     }
 
     if (_init_path_separator() != SUCCESS) {
-        // TODO: add fprintf stderr
+        // TODO: add label_log error
         return FAIL;
     }
 
@@ -55,7 +59,7 @@ unsigned char _init_path_separator() {
     if (PATH_SEPARATOR == FAIL) {
         // os not found
         // therefore PATH_SEPARATOR not defined
-        // TODO: add fprintf stderr
+        // TODO: add label_log error
         return FAIL;
     }
 
@@ -67,12 +71,22 @@ unsigned char _init_path_separator() {
 unsigned char _init_output_folder() {
 
     if (_init_output_folder_path() != SUCCESS) {
-        // TODO: add fprintf stderr
+        // TODO: add label_log error
         return FAIL;
     }
 
     if (_resolve_output_folder_path() != SUCCESS) {
-        // TODO: add fprintf stderr
+        // TODO: handle here errors (errno) if failed
+
+        switch (errno) {
+            case EEXIST:
+                label_log(ERROR_MESSAGE, OUTPUT_FOLDER_EXISTS_ERROR, _OUTPUT_FOLDER_NAME, _cwd);
+                break;
+            default:
+                label_log(ERROR_MESSAGE, OUTPUT_FOLDER_CODE_ERROR, errno);
+                break;
+        }
+        
         return FAIL;
     }
 
@@ -88,7 +102,7 @@ unsigned char _init_output_folder_path() {
     if (_output_folder_path == NULL) {
         // malloc may return NULL
         // always check and in such case throw (lead to) error
-        // TODO: add fprintf stderr
+        // TODO: add label_log error
         return FAIL;
     }
 
@@ -100,8 +114,6 @@ unsigned char _init_output_folder_path() {
 }
 
 unsigned char _resolve_output_folder_path() {
-
-    // TODO: possibly handle here errors if failed
 
     return _resolve_path_OS(_output_folder_path);
 
