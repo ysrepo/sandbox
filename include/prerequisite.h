@@ -9,9 +9,9 @@
     #define PATH_SEPARATOR '\\'
 
     #include <direct.h>
-    #define _resolve_path_WIN32(path) _mkdir(path); 
-    
     #define _resolve_path_OS(path) _resolve_path_WIN32(path)
+
+    #define _resolve_path_WIN32(path) _mkdir(path); 
 
 #elif defined(__unix__)
     // use pathconf dynamically on POSIX, falling back to POSIX PATH_MAX
@@ -19,9 +19,10 @@
     #define PATH_SEPARATOR '/'
 
     #include <sys/stat.h>
+    #define _resolve_path_OS(path) _resolve_path__unix__(path)
+
     #define _resolve_path__unix__(path) mkdir(path, 0777); // TODO: maybe replace 0777 with right flags
 
-    #define _resolve_path_OS(path) _resolve_path__unix__(path)
 
 #endif
 // in all other cases main terminates the execution
