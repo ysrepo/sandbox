@@ -80,7 +80,7 @@ unsigned char _init_output_folder() {
 
         switch (errno) {
             case EEXIST:
-                label_log(ERROR_MESSAGE, OUTPUT_FOLDER_EXISTS_ERROR);
+                label_log(ERROR_MESSAGE, OUTPUT_FOLDER_EXISTS_ERROR, _OUTPUT_FOLDER_NAME, _cwd);
                 break;
             default:
                 label_log(ERROR_MESSAGE, OUTPUT_FOLDER_CODE_ERROR, errno);

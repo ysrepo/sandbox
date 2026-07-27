@@ -9,12 +9,12 @@ Neither Windows API nor Unix API found. \n\
 The execution is terminated. \n\n";
 
 const char* OUTPUT_FOLDER_EXISTS_ERROR = "\n\
-The output folder cannot be created. \n\
-It already exists. Please delete it before running the program. \n\n";
+The output folder \"%s\" under the location \"%s\" cannot be created. \n\
+It already exists. Please delete it before running the program. \n";
 
 const char* OUTPUT_FOLDER_CODE_ERROR = "\n\
 Error during output folder creation. The errno %d occured. \n\
-Refer to errno specification to resolve the problem. \n\n";
+Refer to errno specification to resolve the problem. \n";
 
 const char* OUTPUT_FOLDER_INITIALIZATION_ERROR = "\n\
 The program entered the ERROR: \n\
