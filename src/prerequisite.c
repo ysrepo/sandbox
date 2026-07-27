@@ -1,8 +1,12 @@
 #include "prerequisite.h"
 
+#include "log.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <errno.h>
 
 
 const char * _OUTPUT_FOLDER_NAME = "dispatch";
@@ -73,6 +77,16 @@ unsigned char _init_output_folder() {
 
     if (_resolve_output_folder_path() != SUCCESS) {
         // TODO: handle here errors (errno) if failed
+
+        switch (errno) {
+            case EEXIST:
+                label_log(ERROR_MESSAGE, OUTPUT_FOLDER_EXISTS_ERROR);
+                break;
+            default:
+                label_log(ERROR_MESSAGE, OUTPUT_FOLDER_CODE_ERROR, errno);
+                break;
+        }
+        
         return FAIL;
     }
 
